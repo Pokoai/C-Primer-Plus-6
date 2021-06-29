@@ -1,4 +1,14 @@
-// 2.1
+/*
+ * @Description: c-primer-plus 第二章课后编程题解答
+ * @Author: Adair Hu
+ * @Github: https://github.com/adairhu
+ * @Date: 2021-06-29 20:44:32
+ * @LastEditTime: 2021-06-29 20:56:04
+ * @FilePath: \review_c-primer-plusf:\Project\C\C-Primer-Plus-6\源码\chapter_2.c
+ * 『戒急戒躁，心有大棋。日日耕耘，精进成长。』
+ */
+
+//2.1
 #include <stdio.h>
 int main(void)
 {
@@ -65,8 +75,28 @@ void deny(void)
 }
 
 
+//2.8
+#include <stdio.h>
 
-        continue;
+void one_three(void);
+void two(void);
 
-    return word;
+int main(void)
+{
+    printf("starting now:\n");
+    one_three();
+    printf("three\ndown!");
+
+    return 0;
+}
+
+void one_three(void)
+{
+    printf("one\n");
+    two();
+}
+
+void two(void)
+{
+    printf("two\n");
 }
