@@ -816,13 +816,13 @@ int main(void)
     char ch;
     double weight, total_weight,  artichoke_weight = 0, beet_weight = 0, carrot_weight = 0;
     double vegetable_pay, discount, shipping_pay, total_pay;
-
+    //菜单
     printf("*************************************************************************\n");
     printf("Enter Enter the letter corresponding to the desired vegetables or action:\n");
     printf("a 洋蓟             b 甜菜\n");
     printf("c 胡萝ト           q 退出\n");
     printf("*************************************************************************\n");
-    //菜单
+    
     while((ch = getchar()) != 'q'){
         if(ch == '\n')  //消除前面输入a/b/c/q后按的回车键，以便后面获得干净的输入值。又因为后面是scanf()函数，故这里的代码可以省略。如果后面是getchar()函数必须要这段代码。
              continue;
@@ -872,4 +872,144 @@ int main(void)
     printf("\n蔬菜费用: %.2lf, 折扣: %.2lf, 运费和包装费: %.2lf\n总费用: %.2lf\n",
             vegetable_pay, discount, shipping_pay, total_pay);
     printf("welcome again!");
+}
+
+//7.11 子函数版
+#include <stdio.h>
+void printMenu();
+void calALL(float, float, float);
+void printList(float, float, float, float, float, float, float);
+
+#define ARTICHOKE 2.05  // 菜价
+#define BEET 1.15
+#define CARROT 1.09
+
+#define BASE_DISCOUNT 100   // 基础折扣
+#define DISCOUNT_RATE 0.05
+
+#define BASE_WEIGHT1 5  // 运费
+#define BASE_SHIPPING1 6.5
+#define BASE_WEIGHT2 20
+#define BASE_SHIPPING2 14
+#define ADJUST_SHIPPING 0.5
+
+#define STOP '#'
+
+int main(void)
+{
+    float artichokeWeight = 0;
+    float beetWeight = 0;
+    float carrotWeight = 0;
+    float weight;
+    char ch;
+
+
+    printMenu();
+    while((ch = getchar()) != STOP) {
+        if(ch >= 'a' && ch <= 'c') {
+            printf("Enter the weight: ");
+            scanf("%f", &weight);
+        }
+        switch(ch) {
+            case 'a': artichokeWeight += weight; break;
+            case 'b': beetWeight += weight; break;
+            case 'c': carrotWeight += weight; break;
+            case 'q': break;
+            default:
+                printf("Enter correct alpha.\n");
+        }
+        if (ch == 'q') {
+            calALL(artichokeWeight, beetWeight, carrotWeight); 
+        }
+        printMenu();
+        while(getchar() != '\n')
+            continue;
+    } 
+
+    return 0; 
+}
+
+/**
+ * @description: 打印菜单
+ * @param {*}
+ * @return {*}
+ */
+void printMenu()
+{
+    for (int i = 0; i < 70; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+    printf("Enter the letter corresponding to the desired vegetables or action:\n");
+    printf("a 洋蓟             b 甜菜\n");
+    printf("c 胡萝ト           q 退出订购\n");
+    printf("# 退出程序\n");
+
+    for (int i = 0; i < 70; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+}
+
+
+/**
+ * @description: 计算各种费用
+ * @param {float} artichokeWeight
+ * @param {float} beetWeight
+ * @param {float} carrotWeight
+ * @return {*}
+ */
+void calALL(float artichokeWeight,float beetWeight,float carrotWeight)
+{
+    float vegetable_pay;
+    float discount;
+    float total_weight;
+    float shipping_pay;
+    float total_pay;
+
+
+    vegetable_pay = artichokeWeight * ARTICHOKE + beetWeight * BEET + carrotWeight * CARROT;
+    if(vegetable_pay >= BASE_DISCOUNT){
+        discount = vegetable_pay * DISCOUNT_RATE;
+        //vegetable_pay -= discount;
+    }
+    else
+        discount = 0;        
+    //计算运费
+    total_weight = artichokeWeight + beetWeight + carrotWeight;
+    if(total_weight <= BASE_WEIGHT1)
+        shipping_pay = BASE_SHIPPING1;
+    else if(total_weight > 5 && total_weight < 20)
+        shipping_pay = BASE_SHIPPING2;
+    else
+       shipping_pay = BASE_SHIPPING2 + (total_weight - BASE_WEIGHT2) * ADJUST_SHIPPING;
+    //计算费用总额
+    total_pay = vegetable_pay - discount + shipping_pay;
+
+    printList(artichokeWeight, beetWeight, carrotWeight, vegetable_pay, discount, shipping_pay, total_pay);
+
+}
+
+/**
+ * @description: 打印结果
+ * @param {float} artichokeWeight
+ * @param {float} beetWeight
+ * @param {float} carrotWeight
+ * @param {float} vegetable_pay
+ * @param {float} discount
+ * @param {float} shipping_pay
+ * @param {float} total_pay
+ * @return {*}
+ */
+void printList(float artichokeWeight, float beetWeight, float carrotWeight, float vegetable_pay, float discount, float shipping_pay, float total_pay) 
+{
+    printf("蔬菜种类      洋蓟      甜菜      胡萝卜\n");
+    printf("售价          2.05      1.15       1.09\n");
+    printf("订购重量(磅)   %g        %g        %g\n",
+            artichokeWeight, beetWeight, carrotWeight);
+    printf("\n蔬菜费用: %.2lf, 折扣: %.2lf, 运费和包装费: %.2lf\n总费用: %.2lf\n",
+            vegetable_pay, discount, shipping_pay, total_pay);
+    printf("welcome again!\n\n");
 }
