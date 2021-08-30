@@ -1,3 +1,72 @@
+// 计算整数的约数
+#include <stdio.h>
+#define True 1
+#define False 0
+
+int main(void)
+{
+    int num; 
+    int is_sushu;
+
+    printf("Enter a number: ");
+    while(1 == scanf("%d", &num)) {
+        is_sushu = True;
+
+        for(int i = 2; i * i <= num; i++) {
+            if(num % i == 0) {
+                if(i * i == num)
+                    printf("%d ", i);
+                else
+                    printf("%d %d ", i, num / i);
+                is_sushu = False;
+            }
+        }
+        if(is_sushu) {
+            printf("is sushu");
+        }
+        printf("\nEnter a new number: ");
+    }
+
+    return 0;
+}
+
+// 读取输入内容的字符数、行数、单词数
+#include <stdio.h>
+#include <ctype.h>
+#include <stdbool.h>
+#define STOP '|'
+
+int main(void) 
+{
+    int charNum = 0;
+    int rowNum = 1;
+    int wordNum = 0;\
+    char ch;
+    bool is_word = true;
+
+    printf("Enter a string, Quit: |\n");
+    while((ch = getchar()) != STOP) {
+        //字符数
+        if(!isspace(ch))
+            charNum++;
+        //行数
+        if(ch == '\n')
+            rowNum++;
+        //单词数
+        if(!isspace(ch) && is_word == true) {
+            is_word = false;
+            wordNum++;
+        }
+        if(isspace(ch))
+            is_word = true;
+        
+    }
+    printf("字符数: %d, 行数: %d, 单词数: %d\n", charNum, rowNum, wordNum);
+    
+    return 0;
+    
+}
+
 //7.1
 #include <stdio.h>
 #define STOP '#'
@@ -191,10 +260,10 @@ int main(void)
     while((ch = getchar()) != STOP){
         if(ch == 'e')
             in_ei = true;
-        else if(ch == 'i' && in_ei){
+        else if(ch == 'i' && in_ei)
             count++;
-            in_ei = false;
-        }        
+        else    
+            in_ei = false;        
     }
     printf("\n\"ei\" appeared %d times.", count);
 
@@ -531,6 +600,110 @@ int main(void)
     return 0;
 }
 
+// 7.8 子函数法
+#include <stdio.h>
+void printMenu();
+void calAllPay(float payRate, float workTime);
+
+#define PAY_RATE1 8.75
+#define PAY_RATE2 9.33
+#define PAY_RATE3 10.00
+#define PAY_RATE4 11.20
+
+#define TIME_BASE 40
+
+#define RATE_GRADE1 300
+#define RATE_GRADE2 450
+
+#define RATE1 0.15
+#define RATE2 0.2
+#define RATE3 0.25
+
+#define TIME_RATE 1.5
+
+int main(void)
+{
+    int choice;
+    float payRate;
+    float workTime;
+
+    printMenu();
+    while(1 == scanf("%d", &choice)) {
+        switch(choice) {
+            case 1: 
+                payRate = PAY_RATE1;
+                break;
+            case 2:
+                payRate = PAY_RATE2;
+                break;
+            case 3:
+                payRate = PAY_RATE3;
+                break;
+            case 4:
+                payRate = PAY_RATE4;
+                break;
+            case 5:
+                return 0;
+            default:
+                printf("Please input a correct number.\n");
+                printMenu();
+        }
+        if(choice == 1 || choice == 2 || choice == 3 || choice == 4) {
+            printf("Enter your work time(h): ");
+            scanf("%f", &workTime);
+            calAllPay(payRate, workTime);
+
+            printMenu();
+        }
+        
+    }
+    return 0;
+}
+
+void printMenu()
+{
+    for (int i = 0; i < 65; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+    printf("Enter the number corresponding to the desired pay rate or action:\n");
+    printf("1) $8.75/hr          2) $9.33/hr\n3) $10.00/hr         4) $11.20/hr\n5) quit\n"); 
+
+    for (int i = 0; i < 65; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+}
+
+void calAllPay(float payRate, float workTime) 
+{
+    float payTotal;
+    float tax;
+    float payNet;
+
+    if (workTime > 40) {
+        workTime += (workTime - TIME_BASE) * TIME_RATE;
+    }
+    // 总工资
+    payTotal = workTime * payRate;
+    // 税率
+    if (payTotal < RATE_GRADE1) {
+        tax = payTotal * RATE1;
+    }
+    else if (payTotal < RATE_GRADE2) {
+        tax = RATE_GRADE1 * RATE1 + (payTotal - RATE_GRADE1) * RATE2;
+    }
+    else {
+         tax = RATE_GRADE1 * RATE1 + (RATE_GRADE2 - RATE_GRADE1) * RATE2 + (payTotal - RATE_GRADE2) * RATE3;
+    }
+    // 净工资
+    payNet = payTotal - tax;
+
+    printf("\nTotal_Pay: %.2f, Tax: %.2f, Net_pay: %.2f\n\n", payTotal, tax, payNet);
+
+}
 
 // 7.9
 #include <stdbool.h>
