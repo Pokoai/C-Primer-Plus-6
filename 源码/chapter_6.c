@@ -18,6 +18,26 @@ int main(void)
     return 0;
 }
 
+// 6.1-2
+ #include <stdio.h>
+
+ int main(void)
+ {
+     char zimu[26];
+
+     for(int i = 0; i < 26; i++) {
+         zimu[i] = 'a' + i;
+     }
+
+     printf("%s\n", zimu);
+     
+     for(int j = 0; j < 26; j++) {
+         printf("%c", zimu[j]);
+     }
+     
+     return 0;
+}
+
 
 // 6.2
 #include <stdio.h>
@@ -138,6 +158,29 @@ int main(void)
     return 0;
 }
 
+// 6.9
+#include <stdio.h>
+
+float solve(float n1, float n2);
+
+int main(void)
+{
+    float n1, n2, result;
+
+    printf("Enter two float numbers: ");
+    while(2 == scanf("%f %f", &n1, &n2)) {
+        printf("the result is %2.f\n", solve(n1, n2));
+    }
+
+    return 0;
+
+}
+
+float solve(float n1, float n2)
+{
+    return (n1 - n2) / (n1 * n2);
+}
+
 
 // 6.10
 #include <stdio.h>
@@ -243,8 +286,8 @@ int main(void)
 int main(void)
 {
     double num1[SIZE], num2[SIZE];
-    double sum = 0;
-
+    double sum = 0; // sum 作为全局变量，剩去一个循环
+    
     //printf("Enter first number of 8 numbers: ");
     for(int i = 0; i < SIZE; i++){
         printf("Enter one number of 8 numbers: ");
@@ -268,7 +311,7 @@ int main(void)
 
 // 6.15
 #include <stdio.h>
-#include <string.h>
+//#include <string.h>
 #define SIZE 255
 
 int main(void)
@@ -288,6 +331,11 @@ int main(void)
     //for(i = strlen(str)-2; i >= 0; i--)
     for(i -= 2; i >= 0; i--)
         printf("%c", str[i]);
+
+    // while(i > 0) {
+    //     printf("%c", string[i - 1]);
+    //     i--;
+    // }
         
     return 0;
 }

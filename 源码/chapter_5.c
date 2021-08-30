@@ -21,18 +21,21 @@ int main(void)
 
 // 5.2
 #include <stdio.h>
-#define MIN_PRE_HOUR 60
+#define COUNT 10
 
 int main(void)
 {
     int num;
     int count = 0;
 
-    printf("Enter a number: ");
+    printf("Enter a integer: ");
     scanf("%d", &num);
-    while(count++ <= 10){
-        printf("%d\t", num + count - 1);
+
+    while(count++ <= COUNT) {
+        printf("%d ", num + count - 1);
+
     }
+
     return 0;
 }
 
@@ -61,6 +64,29 @@ int main(void)
     return 0;
 }
 
+// 5.7
+#include <stdio.h>
+
+double lifang(double num);
+
+int main(void)
+{
+    double num, lifangNum;
+
+    printf("Enter a double number: ");
+    scanf("%lf", &num);
+
+    lifangNum = lifang(num);
+
+    printf("the number %.2lf, lifang is %.2lf\n", num, lifangNum);
+
+    return 0;
+}
+
+double lifang(double num)
+{
+    return num * num * num;
+}
 
 // 5.8
 #include <stdio.h>
