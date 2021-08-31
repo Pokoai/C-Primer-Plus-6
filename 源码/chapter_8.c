@@ -1,3 +1,71 @@
+// 按照横列打印字符
+#include <stdio.h>
+void display(int ch, int row, int column);
+
+int main(void)
+{
+    int ch;
+    int row, column;
+
+    printf("Enter a character and two integers: ");
+    while((ch = getchar()) != '\n') {
+        // 跳过空字符，取得首个非空字符
+        while((ch = getchar()) && isspace(ch))
+            continue;
+        scanf("%d %d", &row, &column);
+        //去掉 \n
+        while(getchar() != '\n')
+            continue;
+        display(ch, row, column);
+        printf("Enter another character and two integers: ");
+    }
+    printf("Bey.\n");
+
+    return 0;
+}
+
+void display(int ch, int row, int column)
+{
+    for(int i = 0; i < row; i++) {
+        for(int j = 0; j < column; j++) {
+            putchar(ch);
+        }
+        putchar('\n');
+
+    }
+}
+
+// 菜单例程
+char getChoice(void)
+{
+    int ch;
+
+    printf("Enter the letter of your choice:\n");
+    printf("a. advice       b. bell\n");
+    printf("c. count        q. quit\n");
+
+    ch = getFirst();
+    while(ch != 'a' && ch != 'b' && ch != 'c' && ch != 'q') {
+        printf("Please respond with a, b, c, or q.\n");
+        ch = getFirst();
+    }
+    return ch;
+}
+
+// 获取非空首字符
+char getFirst(void)
+{
+    int ch;
+    // 跳过空字符，针对混合字符和数字输入的情况
+    while((ch = getchar()) == '\n')
+        continue;
+    // 跳过剩余字符
+    while((getchar()) != '\n')
+        continue;
+
+    return ch;
+}
+
 // 复习题 8.3
 #include <stdio.h>
 
@@ -500,5 +568,96 @@ float input_number(void)
     }
     while(getchar() != '\n')
         continue;
+
+    return num;
+}
+
+// 8.8 修改版
+#include <stdio.h>
+#include <ctype.h>
+
+char get_choice();
+char get_first();
+float get_float();
+
+
+int main(void)
+{
+    float num1, num2;
+    float result;
+    char choice;
+    char cal;
+
+    while((choice = get_choice()) != 'q'){
+        printf("Enter first number: ");
+        num1 = get_float();
+        printf("Enter second number: ");
+        num2 = get_float();
+
+        switch(choice) {
+            case 'a': result = num1 + num2; cal = '+'; break;
+            case 's': result = num1 - num2; cal = '-'; break;
+            case 'm': result = num1 * num2; cal = '*'; break;
+            case 'd': 
+                if(num2 == 0) {
+                    printf("Enter a number other than 0: ");
+                    num2 = get_float();
+                }
+                result = num1 / num2;
+                cal = '/';
+                break;
+        }
+        printf("%g %c %g = %g\n", num1, cal, num2, result);
+    
+    }
+    printf("Bey.\n");
+
+    return 0;    
+
+}
+
+char get_choice()
+{
+    int ch;
+
+    printf("Enter the operation of your choice:\n");
+    printf("a. add          s. subtract\n");
+    printf("m. multiply     d. divide\n");
+    printf("q. quit\n");
+
+    ch = get_first();
+    while(ch != 'a' && ch != 's' && ch != 'm' && ch != 'd' && ch != 'q') {
+        printf("Error! Please enter again: ");
+        ch = get_first();
+    }
+    return ch;
+}
+
+char get_first()
+{
+    int ch;
+    // 跳过空字符，取得首个非空字符
+    while((ch = getchar()) && isspace(ch))
+        continue;
+    while(getchar() != '\n')
+        continue;
+
+    return ch;
+}
+
+float get_float()
+{
+    float num;
+    char ch;
+
+    while(scanf("%f", &num) != 1) {
+        while((ch = getchar()) != '\n')
+            putchar(ch);
+        printf(" is not a number.\n");
+        printf("Please enter a number, such as 2.5, -1.78E8, or 3: ");
+    }
+    // while(getchar() != '\n')
+    //     continue;
+        
     return num;
 }
