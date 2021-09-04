@@ -1,3 +1,51 @@
+// 10.1原程序
+#include <stdio.h>
+#define YEARS 5
+#define MONTHS 12
+
+int main(void)
+{
+    const float rain[YEARS][MONTHS] = {
+        { 4.3, 4.3, 4.3, 3.0, 2.0, 1.2, 0.2, 0.2, 0.4, 2.4, 3.5, 6.6 },
+        { 8.5, 8.2, 1.2, 1.6, 2.4, 0.0, 5.2, 0.9, 0.3, 0.9, 1.4, 7.3 },
+        { 9.1, 8.5, 6.7, 4.3, 2.1, 0.8, 0.2, 0.2, 1.1, 2.3, 6.1, 8.4 },
+        { 7.2, 9.9, 8.4, 3.3, 1.2, 0.8, 0.4, 0.0, 0.6, 1.7, 4.3, 6.2 },
+        { 7.6, 5.6, 3.8, 2.8, 3.8, 0.2, 0.0, 0.0, 0.0, 1.3, 2.6, 5.2 }
+    };
+
+    float rain_of_year = 0;
+    float year_total = 0;
+    float month_total = 0;
+
+    // 计算年降水量
+    printf("YEAR    RAINFALL(inches)\n");
+    
+    for(int i = 0; i < YEARS; i++) {
+        for(int j = 0; j < MONTHS; j++) {
+            rain_of_year += rain[i][j]; // *(*(rain + i) + j)
+            //printf("%.1f\n", rain_of_year);
+        }
+        printf("%d      %.1f\n", 2010 + i, rain_of_year);
+        year_total += rain_of_year;
+        rain_of_year = 0; // 先清零再计算下一年的降水量
+
+    }
+    printf("\n The yearly average is %.1f inches\n", year_total / YEARS);
+
+    // 计算月降水量
+    printf("\nMONTHLY AVERAGE:\n\n");
+    
+    for(int i = 0; i < MONTHS; i++) {
+        for(int j = 0; j < YEARS; j++) {
+            month_total += rain[j][i]; // *(*(rain + j) + i)
+        }
+        printf("%.1f ", month_total / YEARS);
+        month_total = 0;
+    }
+
+    return 0;
+}
+
 // 10.1
 #include<stdio.h>
 #define YEARS 5     //年数
@@ -156,6 +204,33 @@ int get_max_index(const int * arr, int n)
     return index;
 }
 
+// 10.5
+#include <stdio.h>
+double get_max_sub_min(const double * arr, int n);
+
+int main(void)
+{
+    const double array[8] = {12.43, 43.5, 4.6, 545.6, 4.67, 5.234, 6.65, 1};
+
+    printf("max-min= %.3lf", get_max_sub_min(array, 8));
+
+    return 0;
+}
+
+double get_max_sub_min(const double * arr, int n)
+{   
+    double max = *arr;
+    double min = *arr;
+
+    for(int i = 0; i < n; i++) {
+        if(max < *(arr + i))
+            max = *(arr + i);
+        if(min > *(arr + i))
+            min = *(arr + i);
+    }
+
+    return (max - min);
+}
 
 // 10.6 
 #include<stdio.h>
