@@ -1,10 +1,10 @@
 /*
- * @Description: c-primer-plus 第二章课后编程题解答
+ * @Description: c-primer-plus 第十四章课本重要程序
  * @Author: Adair Hu
  * @Github: https://github.com/adairhu
  * @Date: 2021-09-03 10:17:50
- * @LastEditTime: 2021-09-04 14:03:02
- * @FilePath: \review_c-primer-pluse:\Project\C\C-Primer-Plus-6\源码\chapter14.c
+ * @LastEditTime: 2021-09-07 07:12:35
+ * @FilePath: \review_c-primer-pluse:\Project\C\C-Primer-Plus-6\源码\chapter_14.c
  * 『戒急戒躁，心装大棋。日日耕耘，精进成长。』
  */
 
