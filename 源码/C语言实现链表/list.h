@@ -3,8 +3,8 @@
  * @Author: Adair Hu
  * @Github: https://github.com/adairhu
  * @Date: 2021-09-07 11:23:55
- * @LastEditTime: 2021-09-07 14:31:04
- * @FilePath: \review_c-primer-plus\list.h
+ * @LastEditTime: 2021-09-07 17:05:41
+ * @FilePath: \review_c-primer-pluse:\Project\C\C-Primer-Plus-6\源码\C语言实现链表\list.h
  * 『戒急戒躁，心装大棋。日日耕耘，精进成长。』
  */
 
@@ -30,7 +30,7 @@ typedef struct node {
 } Node;
 
 // 继续抽象
-typedef Node * List; // List 为指向节点的指针
+typedef Node * List; // List 为指向链表头节点的指针
 
 /**
  * @description: 初始化链表为空

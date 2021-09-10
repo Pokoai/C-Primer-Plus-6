@@ -3,8 +3,8 @@
  * @Author: Adair Hu
  * @Github: https://github.com/adairhu
  * @Date: 2021-09-07 11:23:44
- * @LastEditTime: 2021-09-07 14:32:42
- * @FilePath: \review_c-primer-plus\list.c
+ * @LastEditTime: 2021-09-10 11:07:00
+ * @FilePath: \review_c-primer-pluse:\Project\C\C-Primer-Plus-6\源码\C语言实现链表\list.c
  * 『戒急戒躁，心装大棋。日日耕耘，精进成长。』
  */
 
@@ -19,9 +19,12 @@ static void CopyToNode(Item item, Node * pnode);
  * @param {List *} plist
  * @return {*}
  */
+// 初始化就是要改变链表头指针，使其指向 NULL
+// 而要改变实参的值，就要向函数传递实参的地址，即传递指向实参的指针
+// 这里函数的参数必须是指向头指针的指针，即 List * plist;
 void InitializeList(List * plist) 
 {
-    *plist = NULL;
+    *plist = NULL; // plist是指向链表头指针的指针
 }
 
 /**
@@ -29,7 +32,7 @@ void InitializeList(List * plist)
  * @param {List *} plist
  * @return {*}
  */
-bool ListIsEmpty(const List * plist)
+bool ListIsEmpty(const List * plist) // 加 const 修饰符，表明不修改头指针的内容 *plist
 {
     if(*plist == NULL)
         return true;
@@ -83,16 +86,16 @@ bool AddItem(Item item, List * plist)
 {
     Node * pnew;
     Node * scan = *plist;
-
+    //首先为新节点分配内存空间
     pnew = (Node *)malloc(sizeof(Node));
-    if(pnew == NULL) {
+    if(pnew == NULL) {  
         //fprintf(stderr, "Error!Bey.\n");
         return false;
     }
-    CopyToNode(item, pnew);
-    pnew -> next = NULL;
+    CopyToNode(item, pnew); // 创建一个新节点，将新值item存储进新的节点
+    pnew -> next = NULL; // 节点内有两项，第一项已经存储了item，完毕；第二项存储 NULL;即完成新节点的初始赋值
     // 头指针为空，则直接把 pnew 赋值给头指针
-    if(scan == NULL)
+    if(*plist == NULL)
         *plist = pnew;
     // 头指针非空，则找到链表的尾指针，把 pnew 赋值给尾指针
     else {
@@ -130,7 +133,7 @@ void EmptyList(List * plist)
     Node * psave;
 
     while(*plist != NULL) {
-        psave = (*plist) -> next;
+        psave = (*plist) -> next; // -> 优先级 高于 *
         free(*plist);
         *plist = psave;
     }
